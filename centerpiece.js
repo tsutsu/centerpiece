@@ -35,7 +35,8 @@ function isGeneratedImagePage() {
 	var link_tags = document.getElementsByTagName('link').length;
         var css_tags = document.getElementsByTagName('style').length;
 	var js_tags = document.getElementsByTagName('script').length;
-	return (link_tags == 0 && css_tags == 1 && js_tags == 0);
+        var has_title_match = document.title.match(/\(\d+.\d+\)$/);
+	return (link_tags == 0 && css_tags == 1 && js_tags == 0 && has_title_match);
 }
 
 
