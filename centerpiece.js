@@ -26,14 +26,26 @@ function getImageList() {
 }
 
 
-function notMuchTextGoingOn() {
+function isArticle() {
 	var paragraphs = document.getElementsByTagName('p');
-	return paragraphs.length < 6;
+	return paragraphs.length >= 3;
+}
+
+function isGeneratedImagePage() {
+	var link_tags = document.getElementsByTagName('link').length;
+        var css_tags = document.getElementsByTagName('style').length;
+	var js_tags = document.getElementsByTagName('script').length;
+	return (link_tags == 0 && css_tags == 1 && js_tags == 0);
 }
 
 
-// if we're on a freshly-opened background tab that looks like it doesn't have any "content"...
-if(document.webkitHidden && history.length === 1 && notMuchTextGoingOn()) {
+
+// Only proceed if:
+//  - we're on a freshly-opened background tab
+//  - that looks like a regular HTML page
+//  - without any text content to speak of
+
+if(document.webkitHidden && history.length === 1 && !(isArticle() || isGeneratedImagePage())) {
 	var images = getImageList();
 
 	var largest_image = (images.length >= 1) ? images[0] : null;
